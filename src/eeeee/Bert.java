@@ -42,6 +42,34 @@ public class Bert {
 		refresh();
 		return true;
 	}
+	static int PegaValores (int QualDos5) {
+		switch (QualDos5) {
+		case 1:
+			return Valor1;
+			
+		case 2:
+			return Valor2;
+
+		case 3:
+			return Valor3;
+
+		case 4:
+			return Valor4;
+
+		case 5:
+			return Valor5;
+		
+		default:
+			return -1;
+			
+		}
+		
+		
+		
+		
+		
+		
+	}
 	public static void ChangeHTML(String HTMLE) {
 		HTML = HTMLE;
 		
@@ -54,6 +82,12 @@ public class Bert {
 	private static int Valor5 = 200;
 	public static String pathe;
 	public static String HTML = "pain";
+	
+	
+	
+	
+	
+	
 	public static void main(String args[]) throws FontFormatException, IOException {
 		//código que lista as fontes disponives e manda pro user em forma de JOptionPane
 		String fontes[]
@@ -70,6 +104,7 @@ public class Bert {
 				,fontes
 				,fontes[0]	);
 		//FIXME essa merda ainda não tá saindo alinhada na janela, mas tá no console, MESMO COM A MESMA FUCKING FONTE
+		//aparentemente na real oq acontece é que ele não tá trocando a fonte, o FIXME procede
 		if (eba == null) {return;}
 		
 		//pronto vamo pro resto do código

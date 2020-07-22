@@ -18,7 +18,7 @@ import java.io.*;
 public class sliders {
 	
 	public static class S1 extends JFrame {
-		JSlider Slide = new JSlider(0, 255);
+		JSlider Slide = new JSlider(0, 255, Bert.PegaValores(1));
 		public S1 () {
 			setTitle("Saturação 1");
 			setSize(300, 100);
@@ -35,7 +35,7 @@ public class sliders {
 		}
 	}
 	public static class S2 extends JFrame {
-		JSlider Slide = new JSlider(0, 255);
+		JSlider Slide = new JSlider(0, 255, Bert.PegaValores(2));
 		public S2 () {
 			setTitle("Saturação 2");
 			setSize(300, 100);
@@ -52,12 +52,13 @@ public class sliders {
 		}
 	}
 	public static class S3 extends JFrame {
-		JSlider Slide = new JSlider(0, 255);
+		JSlider Slide = new JSlider(0, 255, Bert.PegaValores(3));
 		public S3 () {
 			setTitle("Saturação 3");
 			setSize(300, 100);
 			add(Slide);
 			setAlwaysOnTop(true);
+			
 			Slide.addChangeListener(new ChangeListener() {
 				
 				@Override
@@ -69,7 +70,7 @@ public class sliders {
 		}
 	}
 	public static class S4 extends JFrame {
-		JSlider Slide = new JSlider(0, 255);
+		JSlider Slide = new JSlider(0, 255, Bert.PegaValores(4));
 		public S4 () {
 			setTitle("Saturação 4");
 			setSize(300, 100);
@@ -86,7 +87,7 @@ public class sliders {
 		}
 	}
 	public static class S5 extends JFrame {
-		JSlider Slide = new JSlider(5, 255);
+		JSlider Slide = new JSlider(5, 255, Bert.PegaValores(5));
 		public S5 () {
 			setTitle("Saturação 5");
 			setSize(300, 100);
