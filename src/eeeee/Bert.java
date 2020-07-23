@@ -17,8 +17,13 @@ import com.sun.javafx.iio.ImageFrame;
 import com.sun.javafx.scene.shape.PathUtils;
 
 import javafx.scene.shape.Line;
+import sun.awt.datatransfer.ClipboardTransferable;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 
 
 @SuppressWarnings({ "serial", "unused" })
@@ -142,13 +147,14 @@ public class Bert {
 		JMenuBar bar = new JMenuBar();
 		JMenu men = new JMenu();
 		JMenuItem text = new JMenuItem("e");
-		
+		JMenuItem roll = new JMenuItem("Nudes do Bruno Berti");
 		
 		//@SuppressWarnings("unused")
 		//TO/DO não esquece de tirar o supresswarnings (feito)
 		//FIX/ME agora por algum motivo a janela resetou os parametros, eu vou me matar (fixed)
 		//public ImageViewerFrame() throws FontFormatException, IOException{setSize(500, 500);new ImageViewerFrame("");}
 		public ImageViewerFrame(String ASCIIDefault, String OMolho) throws FontFormatException, IOException{
+			
 			JLabel ebda = new JLabel(ASCIIDefault);
 			Font cava = new Font(OMolho, NORMAL, TamanhoDaFonte);
 			ebda.setFont(cava);
@@ -195,8 +201,18 @@ public class Bert {
 			JMenuItem CtrlC = new JMenuItem("Colocar o texto no seu CTRL + C");
 			salvar.add(CtrlC);
 			bar.add(salvar);
+			CtrlC.addActionListener(new ActionListener() {@Override public void actionPerformed(ActionEvent e) {
+				Clipboard x = Toolkit.getDefaultToolkit().getSystemClipboard();
+				String text = Ascii;
+				StringSelection selection = new StringSelection(text); x.setContents(selection, null);
+				
+				}});
 			bar.add(refreshe, JMenuBar.RIGHT_ALIGNMENT);
-			
+			exportarrapid.addActionListener(new ActionListener() {@Override public void actionPerformed(ActionEvent e) {
+					try {
+						SaveToPath(System.getProperty("user.home") + "/Desktop"  + "/ASCII", Ascii);
+						JOptionPane.showMessageDialog(null, "O Arquivo foi salvo como \"ASCII.txt\" na sua área de trabalho :)");
+					} catch (IOException e1) {e1.printStackTrace();}}});
 			refreshe.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -204,7 +220,7 @@ public class Bert {
 					try {ImageViewerFrame ee = new ImageViewerFrame(HTML, OMolho);ee.setVisible(true);} catch (FontFormatException | IOException e1) 
 					{e1.printStackTrace();} //bArrA BaRra ToDo, aUtoMatEdE cAtCxE bLoQ
 					dispose();
-
+					
 				}
 			});
 			configsavancadas.addActionListener(new ActionListener() {
@@ -318,8 +334,34 @@ public class Bert {
 					try {if(!(choos.getSelectedFile() == null)) {
 						SaveToPath(choos.getSelectedFile().getPath(), Ascii);}} catch (IOException e1) {e1.printStackTrace();}
 					//o atalho é ctrl+m
+					
 					choos.setSelectedFile(null);
 				}	
+			});
+			men.add(roll);
+			roll.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					 String url_open ="https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+				     try {
+						java.awt.Desktop.getDesktop().browse(java.net.URI.create(url_open));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				     Robot robot;
+					try {
+						robot = new Robot();
+						robot.delay(5000); // 5 segundos
+			            robot.keyPress(KeyEvent.VK_F); 
+					} catch (AWTException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				     
+				}
 			});
 		}
 		
@@ -405,7 +447,8 @@ public class Bert {
 		//TODO otimizar o programa para switch statements
 		//TO/DO fazer com que os switches causem refresh imediato no painel (feito)
 		//TO/DO aumentar o nivel dos valores RGB (feito)
-		//TODO seletor de tema
+		//TO/DO seletor de tema (feito)
+		//TODO outros modos de salvamento além do menuzin
 	
 	public static void ConvertToHTML (String[] eee) {
 		String end = "";
