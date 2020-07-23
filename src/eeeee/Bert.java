@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.sun.javafx.geom.AreaOp.AddOp;
 import com.sun.javafx.iio.ImageFrame;
@@ -21,7 +23,7 @@ import java.awt.*;
 
 @SuppressWarnings({ "serial", "unused" })
 public class Bert {
-	
+	public static boolean TemaClaro = true;
 	public static int AlturaDoASCII = 100;
 	public static int LarguraDoASCII = 100;
 	public static String Ascii = ""; //a ASCII já tá ocupada por outra string na subclasse frame
@@ -80,6 +82,7 @@ public class Bert {
 	private static int Valor3 = 150;
 	private static int Valor4 = 175;
 	private static int Valor5 = 200;
+	public static int TamanhoDaFonte = 10;
 	public static String pathe;
 	public static String HTML = "pain";
 	
@@ -97,7 +100,7 @@ public class Bert {
 		    System.out.println(fontes[i]);
 		}*/
 		String eba = (String)JOptionPane.showInputDialog(null
-				,"<html>Qual fonte você prefere que seja mostrada? <br/>(recomendo vc coloque uma que tem os caracteres de mesmo tamanho)"
+				,"<html>Qual fonte você prefere que seja mostrada? <br/>(recomendo vc coloque uma que tem os caracteres de mesmo tamanho. <br/>recomendo usar a Consolas.)"
 				,"escolhe uma fonte"
 				,JOptionPane.QUESTION_MESSAGE
 				, null
@@ -109,8 +112,7 @@ public class Bert {
 		
 		//pronto vamo pro resto do código
 		System.out.println(eba);
-		Font eee = Font.getFont(eba);
-		JFrame frame = new ImageViewerFrame("",eee);
+		JFrame frame = new ImageViewerFrame("",eba);
 		frame.setTitle("cavalo");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -142,13 +144,14 @@ public class Bert {
 		JMenuItem text = new JMenuItem("e");
 		
 		
-		@SuppressWarnings("unused")
-		//TODO não esquece de tirar o supresswarnings
-		//FIXME agora por algum motivo a janela resetou os parametros, eu vou me matar
+		//@SuppressWarnings("unused")
+		//TO/DO não esquece de tirar o supresswarnings (feito)
+		//FIX/ME agora por algum motivo a janela resetou os parametros, eu vou me matar (fixed)
 		//public ImageViewerFrame() throws FontFormatException, IOException{setSize(500, 500);new ImageViewerFrame("");}
-		public ImageViewerFrame(String ASCIIDefault, Font OMolho) throws FontFormatException, IOException{
+		public ImageViewerFrame(String ASCIIDefault, String OMolho) throws FontFormatException, IOException{
 			JLabel ebda = new JLabel(ASCIIDefault);
-			ebda.setFont(OMolho);
+			Font cava = new Font(OMolho, NORMAL, TamanhoDaFonte);
+			ebda.setFont(cava);
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			int width = (int) screenSize.getWidth();
 			int height = (int) screenSize.getHeight();
@@ -167,17 +170,43 @@ public class Bert {
 			
 			
 			men = new JMenu("Abrir");
-			JMenu avan = new JMenu("Configs avançadas");
+			JMenu avan = new JMenu("Configs");
+			JMenuItem fontsize = new JMenuItem("Ajustar tamanho do texto");
 			JMenuItem configsavancadas = new JMenuItem("Configurar valores de saturação");
+			JMenuItem Tamanho = new JMenuItem("Configurar tamanho do ASCII");
+			avan.add(Tamanho);
 			avan.add(configsavancadas);
+			avan.add(fontsize);
 			//então basicamente a JMenuBar é toda a parte de cima, enquando o JMenu é só um menu que eu tenho que colocar na abarra
 			//coloca na ordem certa filho da puta
 			setJMenuBar(bar);
 			bar.add(men);
 			bar.add(avan);
+			
+			JButton refreshe = new JButton("Recarregar");
+			JMenu salvar = new JMenu("Salvar");
 			JMenuItem eba = new JMenuItem("Transformar uma imagem em ASCII");
 			men.add(eba)/*.setFont(Font.createFont(1,new File(".\\src/eee/consola.ttf")))*/;;
 			
+			JMenuItem Salvarpontpontoponto = new JMenuItem("Salvar...");
+			salvar.add(Salvarpontpontoponto);
+			JMenuItem exportarrapid = new JMenuItem("Exportar rapidamente para a área de trabalho");
+			salvar.add(exportarrapid);
+			JMenuItem CtrlC = new JMenuItem("Colocar o texto no seu CTRL + C");
+			salvar.add(CtrlC);
+			bar.add(salvar);
+			bar.add(refreshe, JMenuBar.RIGHT_ALIGNMENT);
+			
+			refreshe.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
+					try {ImageViewerFrame ee = new ImageViewerFrame(HTML, OMolho);ee.setVisible(true);} catch (FontFormatException | IOException e1) 
+					{e1.printStackTrace();} //bArrA BaRra ToDo, aUtoMatEdE cAtCxE bLoQ
+					dispose();
+
+				}
+			});
 			configsavancadas.addActionListener(new ActionListener() {
 					
 				@Override
@@ -197,7 +226,7 @@ public class Bert {
 				}
 			});
 			eba.addActionListener(new ActionListener() {
-				
+					
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
@@ -208,24 +237,37 @@ public class Bert {
 						String eeeeee = null;
 						try {eeeeee = ASCIIeer(Paths.get(choos.getSelectedFile().getPath()));
 						} catch (IOException mamada) {mamada.printStackTrace();}
-						
+						choos.setSelectedFile(null);
 						String[] eee = eeeeee.split(System.getProperty("line.separator"));
 						ConvertToHTML(eee);
 						
 						}
-						System.out.println('1');
+						
 						setVisible(false);
 						try {ImageViewerFrame ee = new ImageViewerFrame(HTML, OMolho);ee.setVisible(true);} catch (FontFormatException | IOException e1) 
 						{e1.printStackTrace();} //bArrA BaRra ToDo, aUtoMatEdE cAtCxE bLoQ
 						dispose();
-						//FIXME MANO PQ SAI NORMAL NO CONSOLE E AMASSADO NA JANELA PUTA MERDA É A FUCKING MESMA STRING
-						//ok, TODO: sistema de listagem de fontes disponiveis pra quando o usuário inicializar o programa
+						//FIX/ME MANO PQ SAI NORMAL NO CONSOLE E AMASSADO NA JANELA PUTA MERDA É A FUCKING MESMA STRING (era problema de fonte, fixed)
+						//
+						//ok, TO/DO: sistema de listagem de fontes disponiveis pra quando o usuário inicializar o programa (feito)
 						 
 						
 					}
 					
 				}
 			);
+			Tamanho.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
+					String LRG = JOptionPane.showInputDialog("Qual a largura que vc quer?");
+					String ALT =JOptionPane.showInputDialog("Qual a altura que vc quer?");
+					LarguraDoASCII = Integer.parseInt(LRG);
+					AlturaDoASCII = Integer.parseInt(ALT);
+					refresh();//FIX/ME na troca de tamanho de ASCII ele não dá refresh (fixed)
+					setVisible(false);
+					try {ImageViewerFrame ee = new ImageViewerFrame(HTML, OMolho);ee.setVisible(true);} catch (FontFormatException | IOException e1) 
+					{e1.printStackTrace();} 
+					dispose();
+				}
+			});
 			avan.addActionListener(new ActionListener() {
 				
 				@Override
@@ -238,43 +280,89 @@ public class Bert {
 
 				}
 			});
-			
+			JButton ex = new JButton("Fundo escuro");
+			bar.add(ex);
+			JButton xe = new JButton("Fundo claro");
+			bar.add(xe);
+			ex.setEnabled(TemaClaro);
+			xe.setEnabled(!TemaClaro);
+			ex.addActionListener(new ActionListener() {@Override public void actionPerformed(ActionEvent e) {
+				ex.setEnabled(false);xe.setEnabled(true);
+				TemaClaro = false;
+				refresh();
+				setVisible(false);
+				try {ImageViewerFrame ee = new ImageViewerFrame(HTML, OMolho);ee.setVisible(true);} catch (FontFormatException | IOException e1) 
+				{e1.printStackTrace();} 
+				dispose();
+				
+			}});
+			xe.addActionListener(new ActionListener() {@Override public void actionPerformed(ActionEvent e) {
+				xe.setEnabled(false);ex.setEnabled(true);
+				TemaClaro = true;
+				refresh();
+				setVisible(false);
+				try {ImageViewerFrame ee = new ImageViewerFrame(HTML, OMolho);ee.setVisible(true);} catch (FontFormatException | IOException e1) 
+				{e1.printStackTrace();} 
+				dispose();
+			}});
+			Salvarpontpontoponto.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo TXT", "txt");
+					choos.addChoosableFileFilter(filter);
+					choos.setAcceptAllFileFilterUsed(false);
+					choos.showSaveDialog(null);
+					choos.removeChoosableFileFilter(filter);
+					//;;System.out.println(choos.getSelectedFile());
+					//if (choos.file) {return;}
+					try {if(!(choos.getSelectedFile() == null)) {
+						SaveToPath(choos.getSelectedFile().getPath(), Ascii);}} catch (IOException e1) {e1.printStackTrace();}
+					//o atalho é ctrl+m
+					choos.setSelectedFile(null);
+				}	
+			});
 		}
 		
 			
-	}		public static String ASCIIeer (Path nudes) throws IOException {
+	}	
+	//NOTE: não deixa os voids começando no final de outros voids, quando vc encolhe fica muito estranho
+	
+		public static String ASCIIeer (Path nudes) throws IOException {
 		String suamãepelada = null;
 		BufferedImage img = ImageIO.read(nudes.toFile());
 		
-		//como eu não consigo escalar diretamente, eu vou dividir os pixels por 100, crio um for no qual 
-		//a int tem que ser < que a imagem, e sempre acrescento a quantidade TamanhoDaImagem/100 em cada loop
+		//como eu não consigo escalar diretamente, eu vou dividir os pixels por (altura), crio um for no qual 
+		//a int tem que ser < que a imagem, e sempre acrescento a quantidade TamanhoDaImagem/(largura) em cada loop
 		//depois disso eu arredondo a double atual e peço pra ele pegar a coordenada de pixel
 		//e colocar o caractere equivalente,  5Head
 		
-		double alto = img.getHeight()/100;
+		double alto = img.getHeight()/AlturaDoASCII;
 		
 		
 		String ASCII = "";
-		
+		int PixLarg = 0;
+		int PixAlt = 0;
 		while (1 > 0) {
-			
-			double largo = img.getWidth()/100;
+//				System.out.println(LarguraDoASCII);
+//				System.out.println(AlturaDoASCII);
+			double largo = img.getWidth()/LarguraDoASCII;
 			int FileiraAtual =  (int) alto;
 			if (FileiraAtual >= img.getHeight()) {System.out.println("break");break;}
 			 while (1 > 0) {
 				int LargAtual = (int) largo;
-				
+				PixLarg ++;
 				if (LargAtual >= img.getWidth()) {ASCII = ASCII + System.getProperty("line.separator");break;}
 				
-				//System.out.println("analisando pixel " + LargAtual + " " + FileiraAtual);
+				//System.out.println("analisando pixel " + LargAtual + "(largura) e " + FileiraAtual +"altura");
 				ASCII = ASCII + ASCII(img.getRGB(LargAtual, FileiraAtual), Valor1, Valor2, Valor3, Valor4, Valor5);
 				
-				largo = largo + img.getWidth()/100;
+				largo = largo + img.getWidth()/LarguraDoASCII;
 				
 				
 			}
-			
-			alto = alto + img.getHeight()/100;
+			PixAlt ++;
+			//System.out.println("já renderizei " + PixLarg + " pixeis  e " + PixAlt + " fileiras");
+			alto = alto + img.getHeight()/AlturaDoASCII;
 		}
 		System.out.println(ASCII);
 		
@@ -284,7 +372,7 @@ public class Bert {
 		return ASCII;
 	} public static String ASCII (int RGBVALUE, int PERF1, int PERF2, int PERF3, int PERF4, int PERF5) {
 									//padrões:		25			100		150			175			200   (o que sobra é o @)
-									//TODO resizeable ASCII
+									//TO/DO resizeable ASCII (feito)
 		Color c = new Color(RGBVALUE);
 		int alpha = c.getAlpha();
 		
@@ -293,21 +381,31 @@ public class Bert {
 		int B = c.getBlue();
 		
 		
-		//basicamente eu vou calcular uma média entre os valores RGB e o valor alpha e vou criar uns retornos a partir disso
+		//basicamente eu vou calcular uma média entre os valores RGB e vou criar uns retornos a partir disso
 		double MEDIA = R + G + B;
 		MEDIA = MEDIA/3;
+			if (!TemaClaro) {
 		if (MEDIA >= 0 && MEDIA < PERF1) {return "..";} // P1
-		if (MEDIA >= PERF1 && MEDIA < PERF2){return "[]";} // P2
-		else if (MEDIA >= PERF2 && MEDIA < PERF3){return "--";} // P3
+		if (MEDIA >= PERF1 && MEDIA < PERF2){return "--";} // P2
+		else if (MEDIA >= PERF2 && MEDIA < PERF3){return "[]";} // P3
 		else if (MEDIA >= PERF3 && MEDIA < PERF4){return "||";} //P4
 		else if (MEDIA >= PERF4 && MEDIA < PERF5){return "##";} //P5
-		else {return "@@";}
+		else {return "@@";}}
+			else {
+				if (MEDIA >= 0 && MEDIA < PERF1) {return "@@";} // P1
+				if (MEDIA >= PERF1 && MEDIA < PERF2){return "##";} // P2
+				else if (MEDIA >= PERF2 && MEDIA < PERF3){return "||";} // P3
+				else if (MEDIA >= PERF3 && MEDIA < PERF4){return "[]";} //P4
+				else if (MEDIA >= PERF4 && MEDIA < PERF5){return "--";}
+				else {return "..";}}//P5
+			} //nham nham spaguete
+			
 		
 		
 		//TODO otimizar o programa para switch statements
-		//TODO fazer com que os switches causem refresh imediato no painel
-		//TO/DO aumentar o nivel dos valores RGB
-	}
+		//TO/DO fazer com que os switches causem refresh imediato no painel (feito)
+		//TO/DO aumentar o nivel dos valores RGB (feito)
+		//TODO seletor de tema
 	
 	public static void ConvertToHTML (String[] eee) {
 		String end = "";
@@ -324,9 +422,15 @@ public class Bert {
 			}
 		ChangeHTML(end);
 	}
-	
-	public static void refresh () {try {ASCIIeer(Paths.get(pathe));ConvertToHTML(Ascii
-	.split(System.getProperty("line.separator")));} catch (IOException cu) {cu.printStackTrace();};return;}
+	public static void SaveToPath(String path, String WhatDoIWrite) throws IOException {
+		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(path + ".txt")));
+	    writer.append(WhatDoIWrite);
+		writer.close();
+		
+		
+	}
+	public static void refresh () {if (!Ascii.equals("")){try {ASCIIeer(Paths.get(pathe) );ConvertToHTML(Ascii
+	.split(System.getProperty("line.separator")));} catch (IOException cu) {cu.printStackTrace();};return;}}
 	//TODO desfazer essa desgraça
 	//eu gostei do .split separado sei lá o pq
 }
