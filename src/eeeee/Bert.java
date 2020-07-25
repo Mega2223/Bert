@@ -25,15 +25,17 @@ import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 
-
+//se vc estiver procurando o código que faz o ASCII, ele está na linha 372
 @SuppressWarnings({ "serial", "unused" })
 public class Bert {
 	public static boolean TemaClaro = true;
 	public static int AlturaDoASCII = 100;
 	public static int LarguraDoASCII = 100;
 	public static String Ascii = ""; //a ASCII já tá ocupada por outra string na subclasse frame
+	
 	static boolean TrocaValores (int QualDos5, int PraQualValor) {
-		if(QualDos5 < 1||QualDos5 > 5 || PraQualValor < 0 || PraQualValor > 255) {return false;}
+		
+		if( PraQualValor < 0 || PraQualValor > 255) {return false;}
 		switch (QualDos5) {
 		case 1: Valor1 = PraQualValor;
 		break;
@@ -80,7 +82,7 @@ public class Bert {
 	public static void ChangeHTML(String HTMLE) {
 		HTML = HTMLE;
 		
-	}
+	}	//deixei elas no private pq eu sei que eu vou fazer merda no public
 	private static boolean eba = true;
 	private static int Valor1 = 25;
 	private static int Valor2 = 100;
@@ -427,18 +429,22 @@ public class Bert {
 		double MEDIA = R + G + B;
 		MEDIA = MEDIA/3;
 			if (!TemaClaro) {
+				
+				
+				
+				//.-[|-
 		if (MEDIA >= 0 && MEDIA < PERF1) {return "..";} // P1
 		if (MEDIA >= PERF1 && MEDIA < PERF2){return "--";} // P2
 		else if (MEDIA >= PERF2 && MEDIA < PERF3){return "[]";} // P3
 		else if (MEDIA >= PERF3 && MEDIA < PERF4){return "||";} //P4
 		else if (MEDIA >= PERF4 && MEDIA < PERF5){return "##";} //P5
-		else {return "@@";}}
+		else {return "@@";}}	
 			else {
 				if (MEDIA >= 0 && MEDIA < PERF1) {return "@@";} // P1
 				if (MEDIA >= PERF1 && MEDIA < PERF2){return "##";} // P2
 				else if (MEDIA >= PERF2 && MEDIA < PERF3){return "||";} // P3
 				else if (MEDIA >= PERF3 && MEDIA < PERF4){return "[]";} //P4
-				else if (MEDIA >= PERF4 && MEDIA < PERF5){return "--";}
+				else if (MEDIA >= PERF4 && MEDIA < PERF5){return "--";} //P5
 				else {return "..";}}//P5
 			} //nham nham spaguete
 			
