@@ -8,6 +8,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -28,6 +30,7 @@ import java.awt.datatransfer.Transferable;
 //se vc estiver procurando o código que faz o ASCII, ele está na linha 372
 @SuppressWarnings({ "serial", "unused" })
 public class Bert {
+	public static String asqui = "";
 	public static JLabel ebda = new JLabel("pain");
 	public static boolean TemaClaro = true;
 	public static int AlturaDoASCII = 100;
@@ -82,7 +85,8 @@ public class Bert {
 	}
 	public static void ChangeHTML(String HTMLE) {
 		HTML = HTMLE;
-		
+		ebda.setText(HTML);
+		try {Thread.sleep(1000);} catch (InterruptedException horse) {}
 	}	//deixei elas no private pq eu sei que eu vou fazer merda no public
 	private static boolean eba = true;
 	private static int Valor1 = 25;
@@ -151,7 +155,7 @@ public class Bert {
 		JMenu men = new JMenu();
 		JMenuItem text = new JMenuItem("e");
 		JMenuItem roll = new JMenuItem("Nudes do Bruno Berti");
-		JMenu gif = new JMenu("transformar um .gif em ASCII");
+		JMenuItem gif = new JMenuItem("Transformar um .gif em ASCII");
 		//@SuppressWarnings("unused")
 		//TO/DO não esquece de tirar o supresswarnings (feito)
 		//FIX/ME agora por algum motivo a janela resetou os parametros, eu vou me matar (fixed)
@@ -245,6 +249,52 @@ public class Bert {
 					
 				}
 			});
+			add(ebda);
+			
+			men.add(gif);
+			gif.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo GIF", "gif");
+					choos.addChoosableFileFilter(filter);
+					choos.setAcceptAllFileFilterUsed(false);
+					int result = choos.showOpenDialog(null);
+					String end = "cavalo";
+					if (result != JFileChooser.APPROVE_OPTION) {return;}
+					choos.getSelectedFile();
+					String eeeeee;
+					ImageReader reader = (ImageReader)ImageIO.getImageReadersByFormatName("gif").next();
+					ImageInputStream ciis;
+					try {
+						ciis = ImageIO.createImageInputStream(new File(choos.getSelectedFile().getPath()));
+						reader.setInput(ciis, false);
+						 int noi = reader.getNumImages(true);
+						 BufferedImage master = null;
+						 //while (1>0) { 
+						  for (int i = 0; i < noi; i++) { 
+							  BufferedImage image = reader.read(i);
+							  
+							   ConvertToHTML(ASCIIeer(image).split(System.getProperty("line.separator")));
+							   Thread.sleep(100);
+							  // ebda.setText(ASCIIeer(image));
+							   asqui = asqui + ASCIIeer(image);
+							   
+						  }
+						  Clipboard x = Toolkit.getDefaultToolkit().getSystemClipboard();
+						  String text = asqui;
+							StringSelection selection = new StringSelection(text); x.setContents(selection, null);
+						// }
+						 
+							
+						 
+					} catch (IOException | InterruptedException e666) {e666.printStackTrace();}
+					
+
+				}
+			});
+			
 			eba.addActionListener(new ActionListener() {
 					
 				@Override
@@ -258,6 +308,7 @@ public class Bert {
 						try {eeeeee = ASCIIeer(Paths.get(choos.getSelectedFile().getPath()));
 						} catch (IOException mamada) {mamada.printStackTrace();}
 						choos.setSelectedFile(null);
+						
 						String[] eee = eeeeee.split(System.getProperty("line.separator"));
 						ConvertToHTML(eee);
 						
@@ -325,6 +376,9 @@ public class Bert {
 				{e1.printStackTrace();} 
 				dispose();
 			}});
+			
+			
+			
 			Salvarpontpontoponto.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -338,7 +392,8 @@ public class Bert {
 					try {if(!(choos.getSelectedFile() == null)) {
 						SaveToPath(choos.getSelectedFile().getPath(), Ascii);}} catch (IOException e1) {e1.printStackTrace();}
 					//o atalho é ctrl+m
-					
+					//TO/DO mano que porra eu fiz aqui??? como esse código funciona????? eu nem mandei a imagem pro ASCII
+					//wtf???????????????????????????????????????????????????????????????????????????????????????????????
 					choos.setSelectedFile(null);
 				}	
 			});
@@ -372,10 +427,10 @@ public class Bert {
 			
 	}	
 	//NOTE: não deixa os voids começando no final de outros voids, quando vc encolhe fica muito estranho
-	
-		public static String ASCIIeer (Path nudes) throws IOException {
+		public static String ASCIIeer (Path nudes) throws IOException {return ASCIIeer(ImageIO.read(nudes.toFile()));}
+		public static String ASCIIeer (BufferedImage img) throws IOException {
 		String suamãepelada = null;
-		BufferedImage img = ImageIO.read(nudes.toFile());
+		
 		
 		//como eu não consigo escalar diretamente, eu vou dividir os pixels por (altura), crio um for no qual 
 		//a int tem que ser < que a imagem, e sempre acrescento a quantidade TamanhoDaImagem/(largura) em cada loop
