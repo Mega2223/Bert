@@ -28,6 +28,7 @@ import java.awt.datatransfer.Transferable;
 //se vc estiver procurando o código que faz o ASCII, ele está na linha 372
 @SuppressWarnings({ "serial", "unused" })
 public class Bert {
+	public static JLabel ebda = new JLabel("pain");
 	public static boolean TemaClaro = true;
 	public static int AlturaDoASCII = 100;
 	public static int LarguraDoASCII = 100;
@@ -144,22 +145,23 @@ public class Bert {
 	public static class ImageViewerFrame extends JFrame {
 		
 		JLabel label = new JLabel();
-		JLabel ASCII = new JLabel();
+		
 		JFileChooser choos = new JFileChooser();
 		JMenuBar bar = new JMenuBar();
 		JMenu men = new JMenu();
 		JMenuItem text = new JMenuItem("e");
 		JMenuItem roll = new JMenuItem("Nudes do Bruno Berti");
-		
+		JMenu gif = new JMenu("transformar um .gif em ASCII");
 		//@SuppressWarnings("unused")
 		//TO/DO não esquece de tirar o supresswarnings (feito)
 		//FIX/ME agora por algum motivo a janela resetou os parametros, eu vou me matar (fixed)
 		//public ImageViewerFrame() throws FontFormatException, IOException{setSize(500, 500);new ImageViewerFrame("");}
 		public ImageViewerFrame(String ASCIIDefault, String OMolho) throws FontFormatException, IOException{
 			
-			JLabel ebda = new JLabel(ASCIIDefault);
+			
 			Font cava = new Font(OMolho, NORMAL, TamanhoDaFonte);
 			ebda.setFont(cava);
+			ebda.setText(ASCIIDefault);
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			int width = (int) screenSize.getWidth();
 			int height = (int) screenSize.getHeight();
